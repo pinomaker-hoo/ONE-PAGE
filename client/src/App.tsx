@@ -1,3 +1,5 @@
+import Login from './pages/Auth/Login'
+
 export default function App() {
-  return <h1>Hello world</h1>
+  return <Login />
 }
