@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   Post,
   Req,
@@ -10,6 +11,7 @@ import {
 import { AuthService } from "./auth.service"
 import { CreateUserDto } from "./dto/user.create.dto"
 import ReqWithUser from "./dto/user.req.dto"
+import { JwtStrategy } from "./passport/auth.jwt.strategy"
 import { LocalGuard } from "./passport/auth.local.guard"
 
 @Controller("auth")
@@ -29,5 +31,11 @@ export class AuthController {
     const { user } = req
     const token = await this.authService.getJwt(user.idx)
     return res.json({ info: user, token: token })
+  }
+
+  @Get()
+  @UseGuards(JwtStrategy)
+  async test() {
+    return "HELLO"
   }
 }
