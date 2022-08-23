@@ -1,5 +1,7 @@
 import axios from "axios"
 import { useState } from "react"
+import { useNull } from "../../util/common"
+import { setCookie } from "../../util/Cookie"
 
 export default function Login() {
   const [user, setUser] = useState({ email: "", pw: "" })
@@ -9,13 +11,19 @@ export default function Login() {
   }
 
   const onClick = async () => {
-    const config = {
-      method: "post",
-      url: "http://localhost:8080/auth/login",
-      data: user,
+    if (!useNull(Object.values(user))) return alert("NULL")
+    try {
+      const config = {
+        method: "post",
+        url: "http://localhost:8080/auth/login",
+        data: user,
+      }
+      const { data } = await axios(config)
+      setCookie("accesstoken", data.token)
+      localStorage.setItem("info", JSON.stringify({ info: data.info.name }))
+    } catch (err) {
+      console.log(err)
     }
-    const { data } = await axios(config)
-    console.log(res)
   }
   return (
     <div>
