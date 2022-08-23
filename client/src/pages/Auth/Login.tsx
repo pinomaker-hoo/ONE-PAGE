@@ -14,7 +14,7 @@ export default function Login() {
       url: "http://localhost:8080/auth/login",
       data: user,
     }
-    const res = await axios(config)
+    const { data } = await axios(config)
     console.log(res)
   }
   return (
