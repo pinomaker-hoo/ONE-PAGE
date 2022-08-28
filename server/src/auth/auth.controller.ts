@@ -36,6 +36,7 @@ export class AuthController {
   @Get()
   @UseGuards(JwtStrategy)
   async test() {
+    console.log(1)
     return "HELLO"
   }
 }
